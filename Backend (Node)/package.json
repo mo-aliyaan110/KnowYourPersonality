@@ -1,0 +1,25 @@
+{
+  "name": "knowyourpersonality",
+  "version": "1.0.0",
+  "description": "A backend functionality that displays your personality based on your hobbies.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "node",
+    "mongodb",
+    "express.js"
+  ],
+  "author": "Mohammed Aliyaan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.3",
+    "nodemon": "^2.0.19"
+  }
+}

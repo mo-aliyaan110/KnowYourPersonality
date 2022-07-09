@@ -1,0 +1,32 @@
+import React from 'react'
+
+function Dialog() {
+  return (
+    
+    // dialog
+
+            <div class="overlay">
+
+
+            <div class="dialog">
+
+            <div class="dialog__content">
+                <h2 class="dialog__title">Delete a task?</h2>
+                <p class="dialog__description">Are you sure you want to delete this task?</p>
+            </div>
+
+            <hr />
+
+            <div class="dialog__footer">
+                <button class="dialog__cancel">Cancel</button>
+                <button class="dialog__confirm">Yes, delete it</button>
+            </div>
+
+            </div>
+
+            </div>
+    // dialog ends   
+  )
+}
+
+export default Dialog
