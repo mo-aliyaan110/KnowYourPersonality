@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import bgImage from './bgImage.jpg';
 import axios from 'axios';
 import Dialog from './Dialog';
-const postUrl = 'http://localhost:4000/addData';
 require('./Css/app.css');
 
 
@@ -10,10 +9,13 @@ const App = () => {
     const [name, setName] = useState("");
     const [dob, setDob] = useState('');
     const [hobby, setHobby] = useState('');
-
+    
     const [dialog, setDialog] = useState(false);
     const [userId, setUserId] = useState('');
+    const [runUpdateApi, setrunUpdateApi] = useState(false);
     
+    const postUrl = 'http://localhost:4000/addData';
+    const patchUser = `http://localhost:4000/updateUser/${userId}`;
 
     // function to update the name
     const nameChange = (e) => {
@@ -32,16 +34,42 @@ const App = () => {
     
     // function to add the data to the backend
     const postData = async() => {
-
-        await axios.post(postUrl, {
-            name : name,
-            dateofbirth : dob,
-            hobbies : hobby
-        })
+        // if the runupdate is set to false then the post API will run
+        
+        if(!runUpdateApi){    
+            await axios.post(postUrl, {
+                name : name,
+                dateofbirth : dob,
+                hobbies : hobby
+            })
+            
+            .then((res) => {
+                setUserId(res.data._id);
+                setDialog(true);
+                console.log(res.data._id);
+                console.log(userId);
+                
+            })
+    }
+    // if the runupdate is not set to false then the patch API will run.
+    else{
+        
+        axios.put(patchUser, { "name" : name, "dateofbirth" : dob, "hobbies" : hobby })
         .then((res) => {
-            setUserId(res.data._id);
+            
+            
+            alert("Updated, Now reveal your personality within 5 SECONDS!");
             setDialog(true);
+            setTimeout(() => {
+                window.location.reload(1);
+            }, 5000)
+
+
+            
         })
+    }
+
+    
     }
     // reset form function
     const resetForm = () => {
@@ -49,12 +77,27 @@ const App = () => {
         setDob('');
         setHobby('');
     }
+    // function to change the dialog value to show and hide the dialog.
+    const changeDialog = (data) => {
+        
+        if(!data){
+            setDialog(true);   
+        }
+        else{
+            setDialog(false);
+            setrunUpdateApi(true);
+        }
+    }
+
+    const validate = (values) => {
+
+    }
     
     
     return(
         
         <div className='mainParent' style={{backgroundImage: `url(${bgImage})`}}>
-            <Dialog show = {dialog} userId = {userId}/>
+            <Dialog show = {dialog} functionToChangeDial = {changeDialog} userId = {userId}/>
             <div id="appContainer">
                 
                 <div className='innerMainContainer'>
@@ -82,6 +125,6 @@ const App = () => {
             </div>
         </div>
     )
+    
 }
-
 export default App;
